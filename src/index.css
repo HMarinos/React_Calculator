@@ -14,10 +14,12 @@
 .AC {
     background-color: #e94560;
     grid-area: ac;
+    cursor: pointer;
 }
 
 .num {
     background-color: #0f3460;
+    cursor: pointer;
 }
 
 .divide,
@@ -26,6 +28,7 @@
 .add,
 .dot {
     background-color: #16213e;
+    cursor: pointer;
 }
 
 .dot {
@@ -47,6 +50,7 @@
 .equals {
     grid-area: equal;
     background-color: #533483;
+    cursor: pointer;
 }
 .num_7 {
     grid-area: num7;
@@ -90,6 +94,8 @@
     padding: 6px;
     background-color: black;
     box-shadow: 3px 3px 10px black;
+    width: 264px;
+    user-select: none;
 }
 
 .buttons {
@@ -104,13 +110,45 @@
 }
 
 .screen {
-    display: flex;
-    justify-content: right;
-    align-items: flex-end;
     height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    pointer-events: none;
+    overflow-wrap: anywhere;
+}
+h6 {
+    color: white;
+    font-size: 1.5em;
+    margin-bottom: 5px;
 }
 
 h5 {
     color: white;
-    font-size: medium;
+    margin-bottom: 5px;
+    font-size: 1em;
+}
+
+:where(
+        .AC,
+        .add,
+        .divide,
+        .dot,
+        .equals,
+        .multiply,
+        .num_0,
+        .num_1,
+        .num_2,
+        .num_3,
+        .num_4,
+        .num_5,
+        .num_6,
+        .num_7,
+        .num_8,
+        .num_9,
+        .subtract,
+
+    ):hover {
+    transform: scale(0.99);
 }

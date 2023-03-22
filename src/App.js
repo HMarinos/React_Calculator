@@ -3,54 +3,73 @@ const math = require("mathjs");
 
 function App() {
     const [output, setOutput] = React.useState("");
+    const [input, setInput] = React.useState("");
+
+    const handleInput = (value) => {
+        if (input.length < 30) {
+            setInput((prevValue) => prevValue + value);
+        } else {
+            console.log("max");
+        }
+    };
 
     const handleAC = () => {
+        setInput("");
         setOutput("");
     };
     const HandleEqual = () => {
-        setOutput((prevOutput) => math.evaluate(prevOutput));
+        if (input !== "") {
+            setOutput(math.evaluate(input).toString());
+        } else {
+            setOutput("");
+        }
     };
+
     const handleDivision = () => {
-        setOutput((prevValue) => prevValue + "/");
+        handleInput("/");
     };
     const handleMultiplication = () => {
-        setOutput((prevValue) => prevValue + "*");
+        handleInput("*");
     };
     const handleSubtract = () => {
-        setOutput((prevValue) => prevValue + "-");
+        handleInput("-");
     };
     const handleAdd = () => {
-        setOutput((prevValue) => prevValue + "+");
+        handleInput("+");
     };
     const handleNum7 = () => {
-        setOutput((prevValue) => prevValue + "7");
+        handleInput("7");
     };
     const handleNum8 = () => {
-        setOutput((prevValue) => prevValue + "8");
+        handleInput("8");
     };
     const handleNum9 = () => {
-        setOutput((prevValue) => prevValue + "9");
+        handleInput("9");
     };
     const handleNum4 = () => {
-        setOutput((prevValue) => prevValue + "4");
+        handleInput("4");
     };
     const handleNum5 = () => {
-        setOutput((prevValue) => prevValue + "5");
+        if (input.length <= 30) {
+            setInput((prevValue) => prevValue + "5");
+        } else {
+            console.log("max");
+        }
     };
     const handleNum6 = () => {
-        setOutput((prevValue) => prevValue + "6");
+        handleInput("6");
     };
     const handleNum1 = () => {
-        setOutput((prevValue) => prevValue + "1");
+        handleInput("1");
     };
     const handleNum2 = () => {
-        setOutput((prevValue) => prevValue + "2");
+        handleInput("2");
     };
     const handleNum3 = () => {
-        setOutput((prevValue) => prevValue + "3");
+        handleInput("3");
     };
     const handleNum0 = () => {
-        setOutput(function (prevValue) {
+        setInput(function (prevValue) {
             if (prevValue === "0" && prevValue.indexOf("0") === 0) {
                 return "0";
             } else {
@@ -59,13 +78,14 @@ function App() {
         });
     };
     const handleDot = () => {
-        setOutput((prevValue) => prevValue + ".");
+        handleInput(".");
     };
     return (
         <div className="calculator_container">
             <div className="calculator">
                 <div className="screen">
-                    <h5>{output}</h5>
+                    <h6>{output}</h6>
+                    <h5>{input}</h5>
                 </div>
                 <div className="buttons">
                     <button onClick={handleAC} className="AC">
