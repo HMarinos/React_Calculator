@@ -4,25 +4,75 @@ const math = require("mathjs");
 function App() {
     const [output, setOutput] = React.useState("");
     const [input, setInput] = React.useState("");
+    const [alert, setAlert] = React.useState("");
 
     const handleInput = (value) => {
-        if (input.length < 30) {
-            setInput((prevValue) => prevValue + value);
+        if (input.length <= 30) {
+            const lastChar = input.charAt(input.length - 1);
+
+            // checks and replaces if there are multiple operator one after another
+            if (
+                ((value === "/" || value === "*") &&
+                    (lastChar === "/" ||
+                        lastChar === "*" ||
+                        lastChar === "+" ||
+                        lastChar === "-")) ||
+                ((value === "+" || value === "-") &&
+                    (lastChar === "/" || lastChar === "*"))
+            ) {
+                setInput(input.slice(0, -1) + value);
+            } else if (
+                (value === "-" || value === "+") &&
+                (lastChar === "-" || lastChar === "+")
+            ) {
+                setInput((prevValue) => prevValue + value);
+            } else {
+                setInput((prevValue) => prevValue + value);
+            }
         } else {
-            console.log("max");
+            setAlert("LIMIT REACHED");
         }
     };
 
     const handleAC = () => {
         setInput("");
         setOutput("");
+        setAlert("");
     };
     const HandleEqual = () => {
-        if (input !== "") {
+        if (
+            /[\+\-\*\/]?\s*\d+\s*[\+\-\*\/]\s*\d+/.test(input) &&
+            /[0-9]/.test(input) &&
+            input !== "" &&
+            input !== "*" &&
+            input !== "/" &&
+            input !== "+" &&
+            input !== "-" &&
+            input !== "."
+        ) {
             setOutput(math.evaluate(input).toString());
         } else {
-            setOutput("");
+            // setOutput("");
+            setAlert("NAN");
         }
+    };
+    const handleNum0 = () => {
+        setInput(function (prevValue) {
+            if (prevValue === "0" && prevValue.indexOf("0") === 0) {
+                return "0";
+            } else {
+                return prevValue + "0";
+            }
+        });
+    };
+    const handleDot = () => {
+        setInput(function (prevValue) {
+            if (prevValue !== ".") {
+                return prevValue + ".";
+            } else {
+                return ".";
+            }
+        });
     };
 
     const handleDivision = () => {
@@ -50,11 +100,7 @@ function App() {
         handleInput("4");
     };
     const handleNum5 = () => {
-        if (input.length <= 30) {
-            setInput((prevValue) => prevValue + "5");
-        } else {
-            console.log("max");
-        }
+        handleInput("5");
     };
     const handleNum6 = () => {
         handleInput("6");
@@ -68,22 +114,12 @@ function App() {
     const handleNum3 = () => {
         handleInput("3");
     };
-    const handleNum0 = () => {
-        setInput(function (prevValue) {
-            if (prevValue === "0" && prevValue.indexOf("0") === 0) {
-                return "0";
-            } else {
-                return prevValue + "0";
-            }
-        });
-    };
-    const handleDot = () => {
-        handleInput(".");
-    };
+
     return (
         <div className="calculator_container">
             <div className="calculator">
                 <div className="screen">
+                    <div className="alert">{alert}</div>
                     <h6>{output}</h6>
                     <h5>{input}</h5>
                 </div>
