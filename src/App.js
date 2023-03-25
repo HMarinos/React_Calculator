@@ -117,6 +117,10 @@ function App() {
 
     return (
         <div className="calculator_container">
+            <div className="top_half">
+                <div className="middle_man"></div>
+            </div>
+            <div className="bottom_half"></div>
             <div className="calculator">
                 <div className="screen">
                     <div className="alert">{alert}</div>
