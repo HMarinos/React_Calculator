@@ -41,14 +41,9 @@ function App() {
     };
     const HandleEqual = () => {
         if (
-            /[\+\-\*\/]?\s*\d+\s*[\+\-\*\/]\s*\d+/.test(input) &&
-            /[0-9]/.test(input) &&
-            input !== "" &&
-            input !== "*" &&
-            input !== "/" &&
-            input !== "+" &&
-            input !== "-" &&
-            input !== "."
+            /^\s*(-?\d+(\.\d+)?(\s*[\+\-\*\/]\s*(-?\+?\d+(\.\d+)?))*\s*)+$/.test(
+                input
+            )
         ) {
             setOutput(math.evaluate(input).toString());
         } else {
